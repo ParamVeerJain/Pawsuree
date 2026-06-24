@@ -1,4 +1,4 @@
-# 🐾 PawSure — Your One Pet-Stop
+# 🐾 PawSure:Your One Pet-Stop
 
 A playful rebuild of the PawSure landing page. This is a demo redesign of the Pawsuree website (https://www.pawsuree.com/) created as a pitch for Radhika.
 

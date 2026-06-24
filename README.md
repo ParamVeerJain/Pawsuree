@@ -1,6 +1,6 @@
 # 🐾 PawSure:Your One Pet-Stop
 
-A playful rebuild of the PawSure landing page. This is a demo redesign of the Pawsuree website (https://www.pawsuree.com/) created as a pitch for Radhika. The site is also temporarily hosted on FastAPI cloud (https://pawsuree.fastapicloud.dev).
+A rebuild of the PawSure landing page. This is a demo redesign of the Pawsuree website (https://www.pawsuree.com/) created as a pitch for Radhika. The site is also temporarily hosted on FastAPI cloud (https://pawsuree.fastapicloud.dev).
 
 ## Stack
 

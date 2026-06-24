@@ -134,6 +134,14 @@ html.bone-cursor, html.bone-cursor *{cursor:none!important}
   .reveal,.paw-step{opacity:1!important;transform:none!important}
   .house-cta{opacity:1;transform:none;pointer-events:auto}
 }
+
+/* ---- mobile / responsive safety net ---- */
+html{-webkit-text-size-adjust:100%}
+html,body{overflow-x:clip;max-width:100%}
+*,*::before,*::after{min-width:0}
+img,svg{max-width:100%}
+.marquee{overflow:hidden}
+.field-input{min-width:0}
 </style>
 </head>
 <body>
@@ -529,9 +537,6 @@ html.bone-cursor, html.bone-cursor *{cursor:none!important}
     </div>
   </div>
 </footer>
-
-<div class="fixed bottom-3 right-3 z-50 rounded-full border-2 border-deepsea/20 bg-white/90 px-3 py-1.5 font-display text-xs font-bold text-deepsea/60 shadow-sticker backdrop-blur">static preview · full app in <span class="text-pool">frontend/</span> + <span class="text-pool">backend/</span></div>
-
 <script>
 /* ============ shared bits ============ */
 const PAW = '<ellipse cx="7.6" cy="12.6" rx="3" ry="4" transform="rotate(-24 7.6 12.6)"/><ellipse cx="13.1" cy="8.2" rx="3" ry="4.2" transform="rotate(-8 13.1 8.2)"/><ellipse cx="19.6" cy="8.2" rx="3" ry="4.2" transform="rotate(8 19.6 8.2)"/><ellipse cx="25" cy="12.6" rx="3" ry="4" transform="rotate(24 25 12.6)"/><path d="M16.3 14.6c4.6 0 8.4 3.9 8.4 7.7 0 3.6-3.3 5.4-8.4 5.4s-8.4-1.8-8.4-5.4c0-3.8 3.8-7.7 8.4-7.7Z"/>';

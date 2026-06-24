@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PawSure | Your Pet's Favourite People — design preview</title>
+<meta name="description" content="India's most-loved pet care platform. Dog walking, grooming, daycare and more — launching in Lokhandwala." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23D9F1FB'/%3E%3Cg fill='%234A87C8'%3E%3Cellipse cx='18' cy='26' rx='5.4' ry='7.2' transform='rotate(-24 18 26)'/%3E%3Cellipse cx='27.5' cy='18.5' rx='5.4' ry='7.6'/%3E%3Cellipse cx='38.5' cy='18.5' rx='5.4' ry='7.6'/%3E%3Cellipse cx='48' cy='26' rx='5.4' ry='7.2' transform='rotate(24 48 26)'/%3E%3Cpath d='M33 30c8.4 0 15.2 7 15.2 14 0 6.4-6 9.8-15.2 9.8S17.8 50.4 17.8 44c0-7 6.8-14 15.2-14Z'/%3E%3C/g%3E%3C/svg%3E" />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Titan+One&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ice: '#D9F1FB', mist: '#EFF9FE', pool: '#4A87C8', poolsoft: '#5B94D3',
+          deepsea: '#1D4E7E', night: '#142E4C', biscuit: '#F6C453', cream: '#FFFDF4',
+        },
+        fontFamily: {
+          logo: ['"Titan One"', 'sans-serif'],
+          display: ['"Baloo 2"', 'sans-serif'],
+          body: ['Nunito', 'sans-serif'],
+        },
+        boxShadow: {
+          sticker: '0 4px 0 0 rgba(29,78,126,0.18)',
+          stickerLg: '0 10px 0 0 rgba(29,78,126,0.14)',
+          lift: '0 18px 40px -18px rgba(29,78,126,0.45)',
+        },
+      },
+    },
+  };
+</script>
+<style>
+:root{
+  --font-logo:'Titan One',system-ui,sans-serif;
+  --font-display:'Baloo 2',system-ui,sans-serif;
+  --font-body:'Nunito',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:#fff;color:#1D4E7E;font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+section[id]{scroll-margin-top:96px}
+::selection{background:#4A87C8;color:#fff}
+
+/* ---- bone cursor + companion pup ---- */
+html.bone-cursor, html.bone-cursor *{cursor:none!important}
+.cursor-layer{position:fixed;top:0;left:0;pointer-events:none;will-change:transform}
+.bone-layer{z-index:9999;transition:opacity .25s ease}
+.bone-layer svg{width:30px;height:22px;filter:drop-shadow(0 2px 2px rgba(29,78,126,.3));animation:bone-bob 1.6s ease-in-out infinite}
+.dog-layer{z-index:9998}
+.dog-anchor{position:absolute;width:64px;height:64px;transform:translate(-50%,-62%)}
+.dog-sprite{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .22s ease,transform .22s ease}
+.dog-sprite svg{width:56px;height:auto;overflow:visible}
+.dog-sprite[data-show="false"]{opacity:0;transform:scale(.7)}
+.dog-sprite[data-show="true"]{opacity:1;transform:scale(1)}
+.dog-leg,.dog-ear,.dog-tail{transform-box:fill-box}
+.dog-leg{transform-origin:top center}
+.dog-ear{transform-origin:80% 15%}
+.dog-tail{transform-origin:90% 80%;animation:tail-sway 1.4s ease-in-out infinite}
+.dog-running .dog-leg-a{animation:trot .26s ease-in-out infinite}
+.dog-running .dog-leg-b{animation:trot .26s ease-in-out infinite reverse}
+.dog-running .dog-ear{animation:ear-flap .3s ease-in-out infinite}
+.dog-running .dog-tail{animation:tail-wag .3s ease-in-out infinite}
+.dog-running .dog-body{animation:run-bob .26s ease-in-out infinite}
+@keyframes trot{0%,100%{transform:rotate(26deg)}50%{transform:rotate(-26deg)}}
+@keyframes ear-flap{0%,100%{transform:rotate(0)}50%{transform:rotate(-16deg)}}
+@keyframes tail-wag{0%,100%{transform:rotate(14deg)}50%{transform:rotate(-14deg)}}
+@keyframes tail-sway{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-6deg)}}
+@keyframes run-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+@keyframes bone-bob{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+
+/* ---- sticker language ---- */
+.sticker-frame{border-radius:28px;border:3px solid #1D4E7E;background:#fff;box-shadow:0 10px 0 0 rgba(29,78,126,.14)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:9999px;border:3px solid #1D4E7E;padding:.75rem 1.5rem;font-family:var(--font-display);font-weight:700;font-size:1rem;transition:transform .2s ease-out;text-decoration:none}
+.btn:hover{transform:translateY(-2px) rotate(-1deg)}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:#4A87C8;color:#fff;box-shadow:0 4px 0 0 rgba(29,78,126,.18)}
+.btn-primary:hover{background:#1D4E7E}
+.btn-secondary{background:#fff;color:#1D4E7E;box-shadow:0 4px 0 0 rgba(29,78,126,.18)}
+.btn-secondary:hover{background:#D9F1FB}
+.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #4A87C8;outline-offset:3px;border-radius:6px}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;border-radius:9999px;border:2px solid rgba(74,135,200,.3);background:#D9F1FB;padding:.375rem 1rem;font-family:var(--font-display);font-size:.875rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#4A87C8}
+.field-label{display:block;margin-bottom:.375rem;font-family:var(--font-display);font-size:.875rem;font-weight:700;color:#1D4E7E}
+.field-input{width:100%;border-radius:1rem;border:2px solid rgba(29,78,126,.15);background:#fff;padding:.75rem 1rem;font-family:var(--font-body);color:#1D4E7E;transition:border-color .15s}
+.field-input::placeholder{color:rgba(29,78,126,.35)}
+.field-input:hover{border-color:rgba(74,135,200,.4)}
+.field-input:focus{border-color:#4A87C8;outline:none;box-shadow:0 0 0 4px rgba(74,135,200,.18)}
+
+/* ---- marquee ---- */
+.marquee-track{display:flex;width:max-content;animation:marquee 32s linear infinite}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee:hover .marquee-track{animation-play-state:paused}
+
+/* ---- dog-tag cards ---- */
+.tag-card{transform-origin:50% -28px}
+.tag-card:hover{animation:tag-swing 1s ease-in-out}
+@keyframes tag-swing{0%{transform:rotate(0)}25%{transform:rotate(2.4deg)}55%{transform:rotate(-1.8deg)}80%{transform:rotate(.8deg)}100%{transform:rotate(0)}}
+.tag-ear{transition:transform .25s ease;transform-origin:50% 95%}
+.tag-ear-l{transform:rotate(-17deg)}
+.tag-ear-r{transform:rotate(17deg)}
+.tag-card:hover .tag-ear-l{animation:ear-perk-l .55s ease both}
+.tag-card:hover .tag-ear-r{animation:ear-perk-r .55s ease both}
+@keyframes ear-perk-l{0%{transform:rotate(-17deg)}50%{transform:rotate(2deg) translateY(-5px)}100%{transform:rotate(-8deg) translateY(-2px)}}
+@keyframes ear-perk-r{0%{transform:rotate(17deg)}50%{transform:rotate(-2deg) translateY(-5px)}100%{transform:rotate(8deg) translateY(-2px)}}
+.tag-tail{transform-origin:left center;transition:transform .3s ease;transform:rotate(8deg)}
+.tag-card:hover .tag-tail{animation:card-tail-wag .32s ease-in-out infinite}
+@keyframes card-tail-wag{0%,100%{transform:rotate(22deg)}50%{transform:rotate(-12deg)}}
+
+/* ---- reveals ---- */
+.paw-step{opacity:0;transform:scale(.3);transition:opacity .4s ease,transform .4s cubic-bezier(.34,1.56,.64,1)}
+.in-view .paw-step,.paw-step.is-on{opacity:1;transform:scale(1)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal.in-view{opacity:1;transform:translateY(0)}
+
+/* ---- ambient ---- */
+.float-slow{animation:float-y 5.5s ease-in-out infinite}
+.float-slower{animation:float-y 7.5s ease-in-out infinite}
+@keyframes float-y{0%,100%{transform:translateY(0) rotate(var(--tilt,0deg))}50%{transform:translateY(-12px) rotate(var(--tilt,0deg))}}
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.55}}
+.pulse-dot{animation:pulse-dot 1.6s ease-in-out infinite}
+
+/* ---- dog house ---- */
+.house-door{transform-box:view-box;transform-origin:120px 170px;transform:rotate(0);transition:transform .6s cubic-bezier(.34,1.4,.5,1)}
+.house.open .house-door{transform:rotate(-112deg)}
+.house-pup{transform:translateY(108px);transition:transform .55s cubic-bezier(.34,1.56,.64,1) .12s}
+.house.open .house-pup{transform:translateY(-2px)}
+.house-cta{opacity:0;transform:translateY(14px) scale(.7);transition:opacity .3s ease .18s,transform .45s cubic-bezier(.34,1.56,.64,1) .18s;pointer-events:none}
+.house.open .house-cta{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.house:hover .house-shake{animation:house-wiggle .5s ease}
+@keyframes house-wiggle{0%,100%{transform:rotate(0)}30%{transform:rotate(-1.2deg)}65%{transform:rotate(1.2deg)}}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .reveal,.paw-step{opacity:1!important;transform:none!important}
+  .house-cta{opacity:1;transform:none;pointer-events:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ======== bone cursor + pup (activates on desktop fine pointers) ======== -->
+<div id="boneLayer" class="cursor-layer bone-layer" aria-hidden="true" style="display:none">
+  <svg viewBox="0 0 40 24"><path d="M11.5,3.5 C14.2,3.5 16.4,5.4 16.9,7.9 L23.1,7.9 C23.6,5.4 25.8,3.5 28.5,3.5 C31.5,3.5 34,5.9 34,8.9 C34,10.1 33.6,11.2 32.9,12 C33.6,12.8 34,13.9 34,15.1 C34,18.1 31.5,20.5 28.5,20.5 C25.8,20.5 23.6,18.6 23.1,16.1 L16.9,16.1 C16.4,18.6 14.2,20.5 11.5,20.5 C8.5,20.5 6,18.1 6,15.1 C6,13.9 6.4,12.8 7.1,12 C6.4,11.2 6,10.1 6,8.9 C6,5.9 8.5,3.5 11.5,3.5 Z" fill="#FFFDF4" stroke="#1D4E7E" stroke-width="2.6" stroke-linejoin="round"/></svg>
+</div>
+<div id="dogLayer" class="cursor-layer dog-layer" aria-hidden="true" style="display:none">
+  <div id="dogAnchor" class="dog-anchor">
+    <div id="dogRun" class="dog-sprite" data-show="true">
+      <svg viewBox="0 0 64 48" class="dog-body">
+        <g fill="#1D4E7E">
+          <path class="dog-tail" d="M14,26 C8,21 4,22 3,17 C7,18 12,18 16,22 Z"/>
+          <line class="dog-leg dog-leg-a" x1="22" y1="32" x2="18" y2="43" stroke="#1D4E7E" stroke-width="5" stroke-linecap="round"/>
+          <line class="dog-leg dog-leg-b" x1="38" y1="32" x2="34" y2="43" stroke="#1D4E7E" stroke-width="5" stroke-linecap="round"/>
+          <line class="dog-leg dog-leg-b" x1="27" y1="33" x2="29" y2="44" stroke="#1D4E7E" stroke-width="5" stroke-linecap="round"/>
+          <line class="dog-leg dog-leg-a" x1="42" y1="33" x2="45" y2="43" stroke="#1D4E7E" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="30" cy="27" rx="17" ry="10.5"/>
+          <circle cx="46" cy="16" r="10"/>
+          <path d="M50,14 C57,13.5 60,16 60,18.5 C60,21 57,22 50,21 Z"/>
+          <circle cx="59" cy="18.5" r="2.3"/>
+          <path class="dog-ear" d="M42,7 C38,5 33,7 32,12 C34,16 39,17 42,15 Z"/>
+        </g>
+        <rect x="38" y="22.4" width="9" height="4.6" rx="2.3" fill="#F6C453" transform="rotate(-12 42 24)"/>
+        <circle cx="49.5" cy="13.5" r="1.7" fill="#D9F1FB"/>
+      </svg>
+    </div>
+    <div id="dogSit" class="dog-sprite" data-show="false">
+      <svg viewBox="0 0 60 60">
+        <g fill="#1D4E7E">
+          <path class="dog-tail" d="M12,52 C5,52 2,48 3,44 C8,45 12,47 15,50 Z"/>
+          <ellipse cx="20" cy="44" rx="13" ry="12"/>
+          <path d="M20,52 C16,38 22,22 33,18 L40,26 C40,38 36,48 32,53 Z"/>
+          <line x1="30" y1="36" x2="30" y2="54" stroke="#1D4E7E" stroke-width="6" stroke-linecap="round"/>
+          <line x1="38" y1="36" x2="38" y2="54" stroke="#1D4E7E" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="38" cy="15" r="11"/>
+          <path d="M41,12 C48,11.5 53,14.5 53,18 C53,21 48,21.5 41,20.5 Z"/>
+          <circle cx="52" cy="18" r="2.3"/>
+          <path class="dog-ear" d="M33,5 C29,3 24,6 24,11 C26,15 31,16 34,14 Z"/>
+        </g>
+        <rect x="29" y="24" width="13" height="5" rx="2.5" fill="#F6C453"/>
+        <circle cx="41.5" cy="12.5" r="1.7" fill="#D9F1FB"/>
+        <g transform="translate(53,20) rotate(18)">
+          <path transform="translate(-14.4,-8.6) scale(0.72)" d="M11.5,3.5 C14.2,3.5 16.4,5.4 16.9,7.9 L23.1,7.9 C23.6,5.4 25.8,3.5 28.5,3.5 C31.5,3.5 34,5.9 34,8.9 C34,10.1 33.6,11.2 32.9,12 C33.6,12.8 34,13.9 34,15.1 C34,18.1 31.5,20.5 28.5,20.5 C25.8,20.5 23.6,18.6 23.1,16.1 L16.9,16.1 C16.4,18.6 14.2,20.5 11.5,20.5 C8.5,20.5 6,18.1 6,15.1 C6,13.9 6.4,12.8 7.1,12 C6.4,11.2 6,10.1 6,8.9 C6,5.9 8.5,3.5 11.5,3.5 Z" fill="#FFFDF4" stroke="#1D4E7E" stroke-width="2.6" stroke-linejoin="round"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ======== paw trail down the left edge (xl screens) ======== -->
+<div id="pawTrail" aria-hidden="true" class="pointer-events-none fixed bottom-12 left-3 top-28 z-30 hidden w-12 xl:block"><div id="pawTrailInner" class="relative h-full w-full"></div></div>
+
+<!-- ======== navbar ======== -->
+<header class="fixed inset-x-0 top-3 z-40 px-3 sm:top-4 sm:px-4">
+  <nav aria-label="Main" class="group/nav mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full border-[3px] border-deepsea/90 bg-white/90 py-2.5 pl-5 pr-2.5 shadow-stickerLg backdrop-blur-md">
+    <a href="#home" class="flex shrink-0 items-center" aria-label="PawSure — home">
+      <span data-wordmark class="block h-7 w-auto sm:h-8"></span>
+    </a>
+    <ul id="navLinks" class="hidden items-center gap-5 lg:flex"></ul>
+    <div class="flex items-center gap-2">
+      <a href="#services" class="btn btn-primary hidden md:inline-flex" style="padding-top:.625rem;padding-bottom:.625rem;font-size:.875rem">
+        <svg viewBox="0 0 40 24" class="h-4 w-7"><path d="M11.5,3.5 C14.2,3.5 16.4,5.4 16.9,7.9 L23.1,7.9 C23.6,5.4 25.8,3.5 28.5,3.5 C31.5,3.5 34,5.9 34,8.9 C34,10.1 33.6,11.2 32.9,12 C33.6,12.8 34,13.9 34,15.1 C34,18.1 31.5,20.5 28.5,20.5 C25.8,20.5 23.6,18.6 23.1,16.1 L16.9,16.1 C16.4,18.6 14.2,20.5 11.5,20.5 C8.5,20.5 6,18.1 6,15.1 C6,13.9 6.4,12.8 7.1,12 C6.4,11.2 6,10.1 6,8.9 C6,5.9 8.5,3.5 11.5,3.5 Z" fill="#FFFDF4" stroke="#1D4E7E" stroke-width="2.6" stroke-linejoin="round"/></svg>
+        Book a walk
+      </a>
+      <button id="menuBtn" type="button" class="grid h-11 w-11 place-items-center rounded-full border-[3px] border-deepsea bg-ice text-deepsea lg:hidden" aria-expanded="false" aria-label="Open menu">
+        <svg id="menuIco" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" class="h-5 w-5"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div id="mobileSheet" class="mx-auto mt-2 hidden max-w-6xl rounded-[24px] border-[3px] border-deepsea bg-white p-5 shadow-stickerLg lg:hidden">
+    <ul id="mobileLinks" class="flex flex-col gap-4"></ul>
+  </div>
+</header>
+
+<main>
+<!-- ======== hero ======== -->
+<section id="home" class="relative overflow-hidden pb-10 pt-32 sm:pt-36">
+  <svg data-paw class="float-slower absolute left-[6%] top-36 h-10 w-10 text-ice" style="--tilt:-18deg" aria-hidden="true"></svg>
+  <svg data-paw class="float-slow absolute right-[8%] top-48 h-14 w-14 text-ice" style="--tilt:14deg" aria-hidden="true"></svg>
+  <svg data-paw class="float-slow absolute left-[14%] top-[460px] hidden h-8 w-8 text-ice lg:block" style="--tilt:30deg" aria-hidden="true"></svg>
+
+  <div class="mx-auto max-w-6xl px-4 text-center">
+    <div class="reveal"><span class="eyebrow"><span class="pulse-dot inline-block h-2 w-2 rounded-full bg-pool"></span>Launching in Lokhandwala</span></div>
+
+    <h1 class="reveal mx-auto mt-6 max-w-4xl" data-delay="90">
+      <span class="sr-only">PawSure — Your One Pet-Stop</span>
+      <span data-wordmark="tagline" class="mx-auto block w-full max-w-[860px]" style="filter:drop-shadow(0 10px 0 rgba(74,135,200,.12))"></span>
+    </h1>
+
+    <p class="reveal mx-auto mt-5 max-w-xl text-lg font-semibold text-deepsea/70 sm:text-xl" data-delay="180">Everything your pet needs, all in one place.</p>
+
+    <div class="reveal mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4" data-delay="260">
+      <a href="#services" class="btn btn-primary text-lg">
+        <svg viewBox="0 0 40 24" class="h-5 w-8"><path d="M11.5,3.5 C14.2,3.5 16.4,5.4 16.9,7.9 L23.1,7.9 C23.6,5.4 25.8,3.5 28.5,3.5 C31.5,3.5 34,5.9 34,8.9 C34,10.1 33.6,11.2 32.9,12 C33.6,12.8 34,13.9 34,15.1 C34,18.1 31.5,20.5 28.5,20.5 C25.8,20.5 23.6,18.6 23.1,16.1 L16.9,16.1 C16.4,18.6 14.2,20.5 11.5,20.5 C8.5,20.5 6,18.1 6,15.1 C6,13.9 6.4,12.8 7.1,12 C6.4,11.2 6,10.1 6,8.9 C6,5.9 8.5,3.5 11.5,3.5 Z" fill="#FFFDF4" stroke="#1D4E7E" stroke-width="2.6" stroke-linejoin="round"/></svg>
+        Book a walk
+      </a>
+      <a href="#join" class="btn btn-secondary text-lg"><svg data-paw class="h-5 w-5 text-pool"></svg>Join community</a>
+    </div>
+
+    <div class="reveal mt-7 flex items-center justify-center gap-3" data-delay="340">
+      <div id="avatars" class="flex -space-x-3"></div>
+      <p class="text-sm font-bold text-deepsea/70 sm:text-base">500+ pet parents already waiting</p>
+    </div>
+
+    <div class="reveal relative mx-auto mt-12 max-w-4xl" data-delay="420">
+      <div class="group relative">
+        <svg data-ear class="tag-ear tag-ear-l absolute -top-7 left-10 z-10 h-12 w-10 -rotate-6 sm:left-16 sm:h-14 sm:w-12"></svg>
+        <svg data-ear="flip" class="tag-ear tag-ear-r absolute -top-7 right-10 z-10 h-12 w-10 sm:right-16 sm:h-14 sm:w-12"></svg>
+        <div class="tag-card sticker-frame relative -rotate-1 overflow-hidden p-2 sm:p-3">
+          <img src="https://placedog.net/1200/600?id=137" alt="Adorable sleeping puppies" width="1200" height="600" class="h-auto w-full rounded-[20px] object-cover" />
+          <svg data-paw class="absolute bottom-5 left-5 h-9 w-9 rotate-[-20deg] text-white/85 drop-shadow" aria-hidden="true"></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== marquee ======== -->
+<div class="marquee relative -rotate-1 border-y-[3px] border-deepsea bg-pool py-3.5 shadow-stickerLg">
+  <div id="marqueeTrack" class="marquee-track"></div>
+</div>
+
+<!-- ======== about ======== -->
+<section id="about" class="relative py-20 sm:py-28">
+  <div class="mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-2 lg:gap-16">
+    <div class="reveal relative mx-auto w-full max-w-md lg:max-w-none">
+      <div class="sticker-frame -rotate-2 overflow-hidden p-2 sm:p-3">
+        <img src="https://placedog.net/600/600?id=42" alt="Happy dog" width="600" height="600" class="h-auto w-full rounded-[20px] object-cover" />
+      </div>
+      <figure class="sticker-frame absolute -bottom-8 -right-2 w-32 rotate-6 p-1.5 transition-transform duration-300 hover:rotate-3 sm:-right-6 sm:w-40 sm:p-2">
+        <img src="https://cataas.com/cat?width=200&height=200" alt="Cute cat" width="200" height="200" class="h-auto w-full rounded-2xl object-cover" />
+        <svg data-paw class="absolute -left-3 -top-3 h-8 w-8 rotate-[-24deg] text-biscuit drop-shadow" aria-hidden="true"></svg>
+      </figure>
+    </div>
+    <div>
+      <div class="reveal"><span class="eyebrow"><svg data-paw class="h-4 w-4"></svg>PawSure</span></div>
+      <h2 class="reveal mt-5 font-display text-3xl font-extrabold leading-tight text-deepsea sm:text-4xl lg:text-[2.6rem]" data-delay="80">building india's largest pet community and service platform</h2>
+      <p class="reveal mt-4 text-lg font-semibold text-deepsea/65" data-delay="150">We're starting by building a community and launching services alongside it.</p>
+      <ul id="aboutBullets" class="mt-7 space-y-4"></ul>
+    </div>
+  </div>
+</section>
+
+<div data-wave></div>
+
+<!-- ======== services ======== -->
+<section id="services" class="bg-mist py-20 sm:py-24">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="text-center">
+      <div class="reveal"><span class="eyebrow"><svg data-paw class="h-4 w-4"></svg>Services</span></div>
+      <h2 class="reveal mt-5 font-display text-4xl font-extrabold text-deepsea sm:text-5xl" data-delay="80">Everything your pet needs</h2>
+    </div>
+    <div id="serviceGrid" class="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3"></div>
+  </div>
+</section>
+
+<div data-wave="flip"></div>
+
+<!-- ======== how it works ======== -->
+<section id="how" class="py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="text-center">
+      <span class="eyebrow"><svg data-paw class="h-4 w-4"></svg>How it works</span>
+      <h2 class="mt-5 font-display text-4xl font-extrabold text-deepsea sm:text-5xl">Simple as a belly rub</h2>
+    </div>
+    <div id="stepsRow" class="relative mx-auto mt-14 flex max-w-3xl flex-col items-center"></div>
+  </div>
+</section>
+
+<div data-wave></div>
+
+<!-- ======== pups ======== -->
+<section class="bg-mist py-20 sm:py-24">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="text-center">
+      <div class="reveal"><span class="eyebrow"><svg data-paw class="h-4 w-4"></svg>Meet the pups</span></div>
+      <h2 class="reveal mt-5 font-display text-4xl font-extrabold text-deepsea sm:text-5xl" data-delay="80">Walks for every dog</h2>
+      <p class="reveal mx-auto mt-4 max-w-xl text-lg font-semibold text-deepsea/65" data-delay="150">Playful puppy or senior companion — we tailor every walk to their personality.</p>
+    </div>
+    <div id="pupGrid" class="mt-12 grid grid-cols-2 gap-5 sm:gap-7 lg:grid-cols-3"></div>
+  </div>
+</section>
+
+<div data-wave="flip"></div>
+
+<!-- ======== coming next ======== -->
+<section class="overflow-hidden py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="text-center">
+      <h2 class="reveal font-display text-4xl font-extrabold text-deepsea sm:text-5xl">What's Coming Next??</h2>
+      <p class="reveal mx-auto mt-4 max-w-2xl text-lg font-semibold text-deepsea/65" data-delay="90">We're always working to make pet care simpler, safer, and more enjoyable. Stay tuned as we continue to bring better experiences for you and your furry companions.</p>
+    </div>
+    <div class="relative mx-auto mt-14 grid max-w-5xl items-center gap-10 lg:grid-cols-[1fr_auto_1fr]">
+      <div id="chipsLeft" class="hidden flex-col items-end gap-9 lg:flex"></div>
+      <div class="reveal mx-auto w-full max-w-xs sm:max-w-sm">
+        <div class="sticker-frame rotate-1 overflow-hidden p-2 sm:p-3">
+          <img src="https://placedog.net/600/750?id=200" alt="Happy dog" width="600" height="750" class="h-auto w-full rounded-[20px] object-cover" />
+        </div>
+      </div>
+      <div id="chipsRight" class="hidden flex-col items-start gap-9 lg:flex"></div>
+      <div id="chipsMobile" class="flex flex-wrap justify-center gap-x-7 gap-y-5 lg:hidden"></div>
+    </div>
+  </div>
+</section>
+
+<div data-wave></div>
+
+<!-- ======== testimonials ======== -->
+<section class="bg-mist py-20 sm:py-24">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="text-center">
+      <div class="reveal"><span class="eyebrow"><svg data-paw class="h-4 w-4"></svg>Community love</span></div>
+      <h2 class="reveal mt-5 font-display text-4xl font-extrabold text-deepsea sm:text-5xl" data-delay="80">Happy pups, happier parents</h2>
+    </div>
+    <div id="quoteGrid" class="mt-14 grid gap-10 md:grid-cols-3 md:gap-7"></div>
+  </div>
+</section>
+
+<div data-wave="flip"></div>
+
+<!-- ======== apply ======== -->
+<section id="apply" class="py-20 sm:py-28">
+  <div class="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-[5fr_7fr] lg:gap-14">
+    <div class="lg:sticky lg:top-28 lg:self-start">
+      <div class="reveal"><span class="eyebrow"><svg data-paw class="h-4 w-4"></svg>We're hiring</span></div>
+      <h2 class="reveal mt-5 font-display text-4xl font-extrabold leading-tight text-deepsea sm:text-5xl" data-delay="80">Become a Dog Walker</h2>
+      <p class="reveal mt-4 max-w-md text-lg font-semibold text-deepsea/65" data-delay="150">Love dogs? Join PawSure as a certified walker. Flexible hours, free training, and insurance provided.</p>
+      <ul id="perkList" class="reveal mt-7 space-y-3" data-delay="220"></ul>
+    </div>
+
+    <div class="reveal" data-delay="120">
+      <div class="sticker-frame relative p-6 sm:p-8">
+        <span aria-hidden="true" class="absolute -top-5 left-1/2 h-9 w-28 -translate-x-1/2 rounded-full border-[3px] border-deepsea bg-biscuit shadow-sticker"></span>
+        <div id="formWrap">
+        <form id="walkerForm" class="grid gap-5 pt-4 sm:grid-cols-2">
+          <div>
+            <label for="first_name" class="field-label">First name *</label>
+            <input id="first_name" name="first_name" required class="field-input" autocomplete="given-name" />
+          </div>
+          <div>
+            <label for="last_name" class="field-label">Last name *</label>
+            <input id="last_name" name="last_name" required class="field-input" autocomplete="family-name" />
+          </div>
+          <div>
+            <label for="phone" class="field-label">Phone number *</label>
+            <div class="flex">
+              <span class="grid shrink-0 place-items-center rounded-l-2xl border-2 border-r-0 border-deepsea/15 bg-ice px-3 font-display font-bold text-deepsea" style="border-top-left-radius:1rem;border-bottom-left-radius:1rem">+91</span>
+              <input id="phone" name="phone" type="tel" required inputmode="numeric" pattern="[0-9 ]{10,12}" class="field-input" style="border-top-left-radius:0;border-bottom-left-radius:0" autocomplete="tel-national" />
+            </div>
+          </div>
+          <div>
+            <label for="email" class="field-label">Email address</label>
+            <input id="email" name="email" type="email" class="field-input" autocomplete="email" />
+          </div>
+          <div>
+            <label for="age" class="field-label">Age *</label>
+            <input id="age" name="age" type="number" min="14" max="99" required class="field-input" />
+          </div>
+          <div>
+            <label for="area" class="field-label">Your area / neighborhood *</label>
+            <input id="area" name="area" required class="field-input" />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="experience" class="field-label">Experience with dogs *</label>
+            <select id="experience" name="experience" required class="field-input"><option value="" disabled selected>Select your experience</option></select>
+          </div>
+          <fieldset class="sm:col-span-2">
+            <legend class="field-label">Availability *</legend>
+            <div id="slotChips" class="flex flex-wrap gap-2.5"></div>
+          </fieldset>
+          <div class="sm:col-span-2">
+            <label for="motivation" class="field-label">Why do you want to be a PawSure walker?</label>
+            <textarea id="motivation" name="motivation" rows="4" class="field-input" style="resize:vertical"></textarea>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="id_proof" class="field-label">ID proof available *</label>
+            <select id="id_proof" name="id_proof" required class="field-input"><option value="" disabled selected>Select ID type</option></select>
+          </div>
+          <label class="flex cursor-pointer items-start gap-3 sm:col-span-2">
+            <input id="consent" type="checkbox" class="peer sr-only" />
+            <span id="consentBox" class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-lg border-2 border-deepsea/25 bg-white transition-colors"></span>
+            <span class="text-sm font-semibold leading-relaxed text-deepsea/70">I confirm that the information provided is accurate. I agree to a background verification and understand that PawSure will provide free training and insurance upon selection.</span>
+          </label>
+          <p id="formError" role="alert" class="hidden rounded-2xl border-2 border-biscuit bg-cream px-4 py-3 text-sm font-bold text-deepsea sm:col-span-2"></p>
+          <div class="sm:col-span-2">
+            <button id="submitBtn" type="submit" class="btn btn-primary w-full text-lg">
+              <svg viewBox="0 0 40 24" class="h-5 w-8"><path d="M11.5,3.5 C14.2,3.5 16.4,5.4 16.9,7.9 L23.1,7.9 C23.6,5.4 25.8,3.5 28.5,3.5 C31.5,3.5 34,5.9 34,8.9 C34,10.1 33.6,11.2 32.9,12 C33.6,12.8 34,13.9 34,15.1 C34,18.1 31.5,20.5 28.5,20.5 C25.8,20.5 23.6,18.6 23.1,16.1 L16.9,16.1 C16.4,18.6 14.2,20.5 11.5,20.5 C8.5,20.5 6,18.1 6,15.1 C6,13.9 6.4,12.8 7.1,12 C6.4,11.2 6,10.1 6,8.9 C6,5.9 8.5,3.5 11.5,3.5 Z" fill="#FFFDF4" stroke="#1D4E7E" stroke-width="2.6" stroke-linejoin="round"/></svg>
+              <span id="submitLabel">Submit application</span>
+            </button>
+            <p class="mt-4 text-center text-sm font-bold text-deepsea/55">Free training &amp; insurance provided. Flexible hours. 10th pass and above welcome.</p>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-wave></div>
+
+<!-- ======== join / dog house ======== -->
+<section id="join" class="bg-mist py-20 sm:py-28">
+  <div class="mx-auto grid max-w-6xl items-center gap-14 px-4 lg:grid-cols-2">
+    <div class="text-center lg:text-left">
+      <div class="reveal">
+        <span class="relative mx-auto inline-block lg:mx-0">
+          <img src="https://placedog.net/160/160?id=99" alt="Happy dog" width="160" height="160" class="h-20 w-20 rounded-full border-[3px] border-deepsea object-cover shadow-sticker" />
+          <svg data-paw class="absolute -right-3 -top-2 h-7 w-7 rotate-12 text-biscuit drop-shadow" aria-hidden="true"></svg>
+        </span>
+      </div>
+      <h2 class="reveal mt-6 font-display text-4xl font-extrabold leading-tight text-deepsea sm:text-5xl" data-delay="90">Your pup's next favourite walk starts here</h2>
+      <p class="reveal mx-auto mt-4 max-w-md text-lg font-semibold text-deepsea/65 lg:mx-0" data-delay="170">Join our WhatsApp community to get early access and be the first to know when we launch.</p>
+      <div class="reveal mt-8 flex flex-wrap justify-center gap-3 lg:justify-start" data-delay="250">
+        <a href="https://wa.me/917058494099?text=Hi%20PawSure%21%20I%27d%20like%20to%20join%20the%20dog-walking%20community." target="_blank" rel="noopener" class="btn btn-primary"><svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.2-.3.3-.5v-.5L9.8 7.6c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></svg>Join WhatsApp</a>
+        <a href="https://wa.me/917058494099?text=Hi%20PawSure%21%20Please%20let%20me%20know%20when%20you%20launch." target="_blank" rel="noopener" class="btn btn-secondary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-pool"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>Get notified at launch</a>
+      </div>
+    </div>
+
+    <div class="reveal" data-delay="160">
+      <div id="house" class="house relative mx-auto w-full max-w-sm select-none">
+        <a href="https://wa.me/917058494099?text=Hi%20PawSure%21%20I%27d%20like%20to%20join%20the%20dog-walking%20community." target="_blank" rel="noopener" class="house-cta btn btn-primary absolute -top-4 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap text-base shadow-lift">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.2-.3.3-.5v-.5L9.8 7.6c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></svg>
+          Join WhatsApp
+        </a>
+        <button id="houseBtn" type="button" aria-expanded="false" aria-label="Open the dog house" class="block w-full" style="outline-offset:8px">
+          <svg viewBox="0 0 320 304" class="house-shake h-auto w-full" style="filter:drop-shadow(0 14px 0 rgba(29,78,126,.12))">
+            <ellipse cx="160" cy="290" rx="132" ry="11" fill="#D9F1FB"/>
+            <rect x="55" y="130" width="210" height="150" rx="14" fill="#EFF9FE" stroke="#1D4E7E" stroke-width="6"/>
+            <clipPath id="doorway"><path d="M116,279 L116,205 C116,180 136,162 160,162 C184,162 204,180 204,205 L204,279 Z"/></clipPath>
+            <path d="M114,280 L114,205 C114,179 135,160 160,160 C185,160 206,179 206,205 L206,280 Z" fill="#142E4C" stroke="#1D4E7E" stroke-width="6"/>
+            <g clip-path="url(#doorway)">
+              <image href="https://placedog.net/400/500?id=210" x="110" y="166" width="100" height="126" preserveAspectRatio="xMidYMin slice" class="house-pup"/>
+            </g>
+            <g class="house-door">
+              <path d="M120,278 L120,208 C120,184 138,168 160,168 C182,168 200,184 200,208 L200,278 Z" fill="#4A87C8" stroke="#1D4E7E" stroke-width="5.5"/>
+              <circle cx="188" cy="226" r="6" fill="#D9F1FB"/>
+              <g fill="#D9F1FB" opacity=".9" transform="translate(146,194) scale(.85)">
+                <ellipse cx="7.6" cy="12.6" rx="3" ry="4" transform="rotate(-24 7.6 12.6)"/>
+                <ellipse cx="13.1" cy="8.2" rx="3" ry="4.2"/>
+                <ellipse cx="19.6" cy="8.2" rx="3" ry="4.2"/>
+                <ellipse cx="25" cy="12.6" rx="3" ry="4" transform="rotate(24 25 12.6)"/>
+                <path d="M16.3 14.6c4.6 0 8.4 3.9 8.4 7.7 0 3.6-3.3 5.4-8.4 5.4s-8.4-1.8-8.4-5.4c0-3.8 3.8-7.7 8.4-7.7Z"/>
+              </g>
+            </g>
+            <path d="M160,18 L292,132 C296,136 293,143 287,143 L33,143 C27,143 24,136 28,132 Z" fill="#4A87C8" stroke="#1D4E7E" stroke-width="6" stroke-linejoin="round"/>
+            <rect x="118" y="94" width="84" height="36" rx="11" fill="#FFFDF4" stroke="#1D4E7E" stroke-width="4.5"/>
+            <text x="160" y="119" text-anchor="middle" style="font-family:var(--font-display);font-weight:800;font-size:19px;fill:#1D4E7E">PawSure</text>
+          </svg>
+        </button>
+        <p class="mt-4 text-center font-display text-lg font-extrabold text-deepsea">Join our community now!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-wave="night"></div>
+</main>
+
+<!-- ======== footer ======== -->
+<footer class="bg-night text-ice">
+  <div class="mx-auto max-w-6xl px-4 pb-8 pt-16">
+    <div class="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr]">
+      <div>
+        <span data-wordmark="inverse" class="block h-10 w-auto" style="max-width:240px"></span>
+        <div id="footerPaws" class="mt-5 flex gap-1.5" aria-hidden="true"></div>
+      </div>
+      <div>
+        <h3 class="font-display text-lg font-extrabold text-white">Contact</h3>
+        <ul class="mt-4 space-y-3 font-semibold text-ice/80">
+          <li><a href="mailto:paramveerjain09@gmail.com" class="inline-flex items-center gap-2.5 transition-colors hover:text-white"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 shrink-0 text-pool"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>paramveerjain09@gmail.com</a></li>
+          <li><a href="tel:+917058494099" class="inline-flex items-center gap-2.5 transition-colors hover:text-white"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 shrink-0 text-pool"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>+91 70584 94099</a></li>
+          <li class="inline-flex items-center gap-2.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 shrink-0 text-pool"><path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>Lokhandwala, India</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-display text-lg font-extrabold text-white">Social</h3>
+        <div class="mt-4 flex gap-3">
+          <a href="#" aria-label="Facebook" class="grid h-11 w-11 place-items-center rounded-full border-2 border-ice/25 font-display text-lg font-extrabold lowercase text-ice transition-all hover:-translate-y-0.5 hover:border-pool hover:bg-pool hover:text-white">f</a>
+          <a href="#" aria-label="Twitter" class="grid h-11 w-11 place-items-center rounded-full border-2 border-ice/25 font-display text-lg font-extrabold lowercase text-ice transition-all hover:-translate-y-0.5 hover:border-pool hover:bg-pool hover:text-white">t</a>
+          <a href="#" aria-label="Instagram" class="grid h-11 w-11 place-items-center rounded-full border-2 border-ice/25 font-display text-lg font-extrabold lowercase text-ice transition-all hover:-translate-y-0.5 hover:border-pool hover:bg-pool hover:text-white">i</a>
+        </div>
+        <ul class="mt-6 space-y-2.5 font-semibold text-ice/80">
+          <li><a href="#services" class="inline-flex items-center gap-2 transition-colors hover:text-white"><svg data-paw class="h-3.5 w-3.5 text-pool"></svg>Book a walk</a></li>
+          <li><a href="#join" class="inline-flex items-center gap-2 transition-colors hover:text-white"><svg data-paw class="h-3.5 w-3.5 text-pool"></svg>Join community</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-14 flex flex-col items-center justify-between gap-4 border-t-2 border-ice/10 pt-6 sm:flex-row">
+      <span class="inline-flex items-center gap-2 font-display font-extrabold text-white"><svg data-paw class="h-5 w-5 -rotate-12 text-pool"></svg>PawSure</span>
+      <p class="text-sm font-semibold text-ice/60">© 2026 PawSure. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="fixed bottom-3 right-3 z-50 rounded-full border-2 border-deepsea/20 bg-white/90 px-3 py-1.5 font-display text-xs font-bold text-deepsea/60 shadow-sticker backdrop-blur">static preview · full app in <span class="text-pool">frontend/</span> + <span class="text-pool">backend/</span></div>
+
+<script>
+/* ============ shared bits ============ */
+const PAW = '<ellipse cx="7.6" cy="12.6" rx="3" ry="4" transform="rotate(-24 7.6 12.6)"/><ellipse cx="13.1" cy="8.2" rx="3" ry="4.2" transform="rotate(-8 13.1 8.2)"/><ellipse cx="19.6" cy="8.2" rx="3" ry="4.2" transform="rotate(8 19.6 8.2)"/><ellipse cx="25" cy="12.6" rx="3" ry="4" transform="rotate(24 25 12.6)"/><path d="M16.3 14.6c4.6 0 8.4 3.9 8.4 7.7 0 3.6-3.3 5.4-8.4 5.4s-8.4-1.8-8.4-5.4c0-3.8 3.8-7.7 8.4-7.7Z"/>';
+const BONE_PATH = 'M11.5,3.5 C14.2,3.5 16.4,5.4 16.9,7.9 L23.1,7.9 C23.6,5.4 25.8,3.5 28.5,3.5 C31.5,3.5 34,5.9 34,8.9 C34,10.1 33.6,11.2 32.9,12 C33.6,12.8 34,13.9 34,15.1 C34,18.1 31.5,20.5 28.5,20.5 C25.8,20.5 23.6,18.6 23.1,16.1 L16.9,16.1 C16.4,18.6 14.2,20.5 11.5,20.5 C8.5,20.5 6,18.1 6,15.1 C6,13.9 6.4,12.8 7.1,12 C6.4,11.2 6,10.1 6,8.9 C6,5.9 8.5,3.5 11.5,3.5 Z';
+const pawSvg = (cls, style) => `<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" class="${cls}"${style ? ` style="${style}"` : ''}>${PAW}</svg>`;
+const boneSvg = (cls) => `<svg viewBox="0 0 40 24" aria-hidden="true" class="${cls}"><path d="${BONE_PATH}" fill="#FFFDF4" stroke="#1D4E7E" stroke-width="2.6" stroke-linejoin="round"/></svg>`;
+const pointyEarSvg = () => `<path d="M7,49 L17,6 C18,1.5 22,1.5 23,6 L33,49 C27,44.5 13,44.5 7,49 Z" fill="#4A87C8" stroke="#1D4E7E" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M15,43 L19.5,14 C19.8,11.5 20.2,11.5 20.5,14 L25,43 C21,40 19,40 15,43 Z" fill="#D9F1FB"/>`;
+const earSvg = (flip) => `<path d="M6,36 C2,24 4,10 13,4 C22,-1 31,5 31,14 C31,25 23,34 12,38 C9,39 7,38.5 6,36 Z" fill="#4A87C8" stroke="#1D4E7E" stroke-width="3" stroke-linejoin="round"/><path d="M11,31 C9,23 11,13 17,9" stroke="#D9F1FB" stroke-width="3" stroke-linecap="round" fill="none"/>`;
+const WORDMARK = (theme, tagline) => {
+  const fill = theme === 'inverse' ? '#142E4C' : '#D9F1FB';
+  const stroke = theme === 'inverse' ? '#D9F1FB' : '#4A87C8';
+  const tagFill = theme === 'inverse' ? '#9CC4E8' : '#5B94D3';
+  return `<svg viewBox="0 0 700 ${tagline ? 200 : 140}" role="img" aria-label="PawSure" style="width:100%;height:100%;display:block">
+    <text x="350" y="112" text-anchor="middle" textLength="664" lengthAdjust="spacingAndGlyphs" rotate="-2 2 -2.5 2 -2 1.5 -1.5" style="font-family:var(--font-logo);font-size:118px;fill:${fill};stroke:${stroke};stroke-width:8;stroke-linejoin:round;paint-order:stroke fill;letter-spacing:2px">PAWSURE</text>
+    ${tagline ? `<text x="350" y="178" text-anchor="middle" style="font-family:var(--font-display);font-weight:800;font-size:44px;fill:${tagFill};letter-spacing:1px">your one pet-stop.</text>` : ''}
+  </svg>`;
+};
+
+/* hydrate placeholders */
+document.querySelectorAll('[data-paw]').forEach((el) => {
+  el.setAttribute('viewBox', '0 0 32 32');
+  el.setAttribute('fill', 'currentColor');
+  el.innerHTML = PAW;
+});
+document.querySelectorAll('[data-ear]').forEach((el) => {
+  el.setAttribute('viewBox', '0 0 34 40');
+  if (el.dataset.ear === 'flip') el.style.transform = 'scaleX(-1)';
+  el.innerHTML = earSvg();
+});
+document.querySelectorAll('[data-wordmark]').forEach((el) => {
+  const mode = el.dataset.wordmark;
+  el.innerHTML = WORDMARK(mode === 'inverse' ? 'inverse' : 'brand', mode === 'tagline');
+  if (!el.style.aspectRatio) el.style.aspectRatio = mode === 'tagline' ? '700/200' : '700/140';
+});
+document.querySelectorAll('[data-wave]').forEach((el) => {
+  const mode = el.dataset.wave;
+  const fill = mode === 'night' ? '#142E4C' : '#EFF9FE';
+  el.innerHTML = `<svg viewBox="0 0 1440 72" preserveAspectRatio="none" aria-hidden="true" class="block h-10 w-full md:h-14${mode === 'flip' ? ' rotate-180' : ''}${mode === 'night' ? ' bg-mist' : ''}"><path d="M0,42 C180,74 360,8 560,28 C760,48 900,70 1080,46 C1230,26 1340,18 1440,38 L1440,72 L0,72 Z" fill="${fill}"/></svg>`;
+});
+
+/* ============ content ============ */
+const NAV = [
+  { label: 'Home', href: '#home' },
+  { label: 'About us', href: '#about' },
+  { label: 'Services', href: '#services' },
+  { label: 'Walk with us', href: '#apply' },
+];
+const MARQUEE = ['Dog Walking','Pet Grooming','Daycare','Pet Sitting','Vet Reminders','Training','Boarding','Health Tracking','Community'];
+const BULLETS = [
+  'Everything your pet needs, all in one place.',
+  'Starting with dog walking, with more services coming soon.',
+  'A trusted community of pet parents around you.',
+  'A pet care platform, tailored to your pet (coming soon).',
+];
+const SERVICES = [
+  { title:'Dog Walking', status:'Live now', img:'https://placedog.net/200/200?id=80', d:'Trusted, insured walkers who treat your pup like their own. GPS-tracked with live updates.' },
+  { title:'Pet Grooming', status:'Coming soon', img:'https://placedog.net/200/200?id=92', d:'Full spa treatments from bath to breed-specific styling. At your doorstep.' },
+  { title:'Daycare', status:'Coming soon', img:'https://placedog.net/200/200?id=104', d:"1:1 supervision, playtime, feeding, and real-time photo updates while you're away." },
+  { title:'Boarding', status:'Coming soon', img:'https://placedog.net/200/200?id=115', d:'Overnight stays with full care — evening walks, feeding, and morning updates.' },
+  { title:'Vet Support', status:'Coming soon', img:'https://placedog.net/200/200?id=126', d:'Quick access to qualified vets, vaccination tracking, and health reminders.' },
+  { title:'Training', status:'Coming soon', img:'https://placedog.net/200/200?id=148', d:'Expert behavioural training and obedience programs customised for your dog.' },
+];
+const STEPS = [
+  { n:'01', t:'Request a walk', img:'https://placedog.net/200/200?id=160', d:'Pick a time that works. Morning, afternoon, or evening — your call.' },
+  { n:'02', t:'We match a walker', img:'https://placedog.net/200/200?id=170', d:"A verified, caring walker is assigned based on your pup's needs." },
+  { n:'03', t:'Live updates', img:'https://placedog.net/200/200?id=180', d:'GPS tracking, photos, and real-time notifications throughout the walk.' },
+  { n:'04', t:'Happy pup returns', img:'https://placedog.net/200/200?id=190', d:'Tired, satisfied, and full of love. Post-walk report delivered to you.' },
+];
+const PUPS = [
+  { name:'Buddy', age:'12 yrs', img:'https://placedog.net/400/400?id=1' },
+  { name:'Max', age:'3 yrs', img:'https://placedog.net/400/400?id=12' },
+  { name:'Daisy', age:'10 mo', img:'https://placedog.net/400/400?id=22' },
+  { name:'Luna', age:'3 mo', img:'https://placedog.net/400/400?id=37' },
+  { name:'Charlie', age:'5 mo', img:'https://placedog.net/400/400?id=58' },
+  { name:'Bella', age:'1 yr', img:'https://placedog.net/400/400?id=69' },
+];
+const CHIPS = ['Professional Grooming','Pet Daycare','Medical Records','Pet Boarding','Vet Reminders','Health Guidance'];
+const QUOTES = [
+  { q:'Finally, a service that treats my dog like family. The live GPS tracking gives me so much peace of mind.', i:'SR', n:'Sneha R.', r:'Golden Retriever parent' },
+  { q:"The walker sends photos every time. Max comes home so happy and tired. Best thing I've found for him.", i:'AM', n:'Arjun M.', r:'Labrador parent' },
+  { q:"Can't wait for grooming to launch! The walking service is already incredible. My pup loves his walker.", i:'PK', n:'Priya K.', r:'Indie Dog parent' },
+];
+const EXPERIENCE = ['I own / have owned a dog','Professional dog handler / walker','Volunteered at shelters / NGOs','No formal experience, but I love dogs'];
+const SLOTS = ['Mornings (6-10 AM)','Midday (10 AM-2 PM)','Afternoons (2-6 PM)','Evenings (6-9 PM)','Weekdays','Weekends'];
+const IDS = ['Aadhaar Card','PAN Card','Voter ID','Passport','Driving License'];
+
+/* ============ render sections ============ */
+const esc = (s) => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+const navLi = (l, tilt, extra='') => `<li class="flex items-center gap-2">${pawSvg('h-3.5 w-3.5 shrink-0 text-pool/45','transform:rotate('+tilt+'deg)')}<a href="${l.href}" ${extra} class="font-display text-[15px] font-bold text-deepsea/80 transition-colors hover:text-pool">${l.label}</a></li>`;
+document.getElementById('navLinks').innerHTML = NAV.map((l,i)=>navLi(l, i%2?16:-14)).join('');
+document.getElementById('mobileLinks').innerHTML = NAV.map((l,i)=>navLi(l, i%2?16:-16, 'data-close')).join('') +
+  `<li><a href="#services" data-close class="btn btn-primary w-full">${boneSvg('h-4 w-7')}Book a walk</a></li>`;
+
+document.getElementById('avatars').innerHTML = ['S','A','P','R'].map((a,i)=>{
+  const shades=['background:#4A87C8','background:#5B94D3','background:#1D4E7E','background:#F6C453;color:#1D4E7E'];
+  return `<span class="grid h-10 w-10 place-items-center rounded-full border-[3px] border-white font-display text-sm font-bold text-white shadow-sticker" style="${shades[i]}">${a}</span>`;
+}).join('');
+
+const marqueeRow = (hidden) => `<ul class="flex items-center"${hidden?' aria-hidden="true"':''}>${MARQUEE.map((m,i)=>`<li class="flex items-center gap-6 pr-6"><span class="whitespace-nowrap font-display text-lg font-bold text-white sm:text-xl">${m}</span>${pawSvg('h-4 w-4 shrink-0 text-ice/70 '+(i%2?'rotate-12':'-rotate-12'))}</li>`).join('')}</ul>`;
+document.getElementById('marqueeTrack').innerHTML = marqueeRow(false)+marqueeRow(true);
+
+document.getElementById('aboutBullets').innerHTML = BULLETS.map((b,i)=>`<li class="reveal flex items-start gap-3" data-delay="${220+i*90}"><span class="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 border-deepsea/15 bg-ice">${pawSvg('h-4 w-4 text-pool '+(i%2?'rotate-12':'-rotate-12'))}</span><span class="pt-1 font-semibold text-deepsea/80">${b}</span></li>`).join('');
+
+document.getElementById('serviceGrid').innerHTML = SERVICES.map((s,i)=>{
+  const live = s.status==='Live now';
+  return `<div class="reveal pt-8" data-delay="${(i%3)*110}"><article class="group relative h-full">
+    <span aria-hidden="true" class="absolute left-1/2 top-0 z-10 h-9 w-9 -translate-x-1/2 rounded-full border-[5px] border-deepsea/70 bg-transparent"></span>
+    <div class="tag-card sticker-frame relative h-full px-6 pb-8 pt-10 text-center">
+      <span aria-hidden="true" class="absolute left-1/2 top-3 h-5 w-5 -translate-x-1/2 rounded-full border-[3px] border-deepsea/30 bg-mist"></span>
+      <svg viewBox="0 0 40 54" class="tag-ear tag-ear-l absolute -top-9 left-7 z-[5] h-16 w-11">${pointyEarSvg()}</svg>
+      <svg viewBox="0 0 40 54" class="tag-ear tag-ear-r absolute -top-9 right-7 z-[5] h-16 w-11">${pointyEarSvg()}</svg>
+      <svg viewBox="0 0 44 30" class="tag-tail absolute -right-7 bottom-10 hidden h-7 w-10 sm:block"><path d="M3,24 C14,26 26,22 33,13 C36,9 38,6 41,4" fill="none" stroke="#1D4E7E" stroke-width="8" stroke-linecap="round"/><path d="M3,24 C14,26 26,22 33,13 C36,9 38,6 41,4" fill="none" stroke="#4A87C8" stroke-width="4" stroke-linecap="round"/></svg>
+      <div class="relative mx-auto mt-2 w-fit">
+        <img src="${s.img}" alt="${s.title}" width="200" height="200" class="h-28 w-28 rounded-full border-[3px] border-deepsea object-cover shadow-sticker" loading="lazy" />
+        <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border-2 border-deepsea px-3 py-0.5 font-display text-xs font-bold ${live?'bg-biscuit text-deepsea':'bg-ice text-pool'}">${s.status}</span>
+      </div>
+      <h3 class="mt-6 font-display text-2xl font-extrabold text-deepsea">${s.title}</h3>
+      <p class="mt-2 font-semibold leading-relaxed text-deepsea/65">${esc(s.d)}</p>
+    </div></article></div>`;
+}).join('');
+
+const WALK = {
+  right: { pts:[[110,16,205],[133,40,192],[150,68,175],[150,100,162],[130,126,150]], curve:'M110,10 C150,34 165,78 150,108 C144,122 132,132 122,140' },
+  left:  { pts:[[110,16,155],[87,40,168],[70,68,185],[70,100,198],[90,126,210]], curve:'M110,10 C70,34 55,78 70,108 C76,122 88,132 98,140' },
+};
+const stepCard = (s,side)=>`<div class="how-card w-full max-w-md lg:w-[46%] ${side==='right'?'lg:ml-auto':'lg:mr-auto'}" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)"><div class="relative flex items-center gap-5 rounded-[28px] border-[3px] border-deepsea/10 bg-mist px-6 py-6 transition-colors duration-300 hover:border-deepsea hover:bg-white hover:shadow-stickerLg"><div class="relative shrink-0"><img src="${s.img}" alt="${s.t}" width="200" height="200" class="h-24 w-24 rounded-full border-[3px] border-deepsea object-cover" loading="lazy" /><span class="absolute -left-3 -top-3 grid h-11 w-11 place-items-center rounded-full border-[3px] border-deepsea bg-biscuit font-display text-base font-extrabold text-deepsea shadow-sticker">${s.n}</span></div><div class="text-left"><h3 class="font-display text-xl font-extrabold text-deepsea">${s.t}</h3><p class="mt-1.5 text-[15px] font-semibold leading-relaxed text-deepsea/65">${esc(s.d)}</p></div></div></div>`;
+const walkTrail = (d)=>{ const w=WALK[d];
+  const paws=w.pts.map((p,i)=>`<svg class="walk-paw" data-rot="${p[2]}" viewBox="0 0 32 32" fill="currentColor" style="position:absolute;left:${p[0]}px;top:${p[1]}px;width:24px;height:24px;color:rgba(74,135,200,.7);transform:translate(-50%,-50%) rotate(${p[2]}deg) scale(.3);opacity:0;transition:opacity .4s ease,transform .45s cubic-bezier(.34,1.56,.64,1);transition-delay:${i*130}ms">${PAW}</svg>`).join('');
+  return `<div class="walk-trail relative mx-auto" style="height:150px;width:220px"><svg viewBox="0 0 220 150" class="absolute inset-0 h-full w-full"><path class="walk-curve" d="${w.curve}" fill="none" stroke="#4A87C8" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 9" opacity="0" style="transition:opacity .5s ease .1s"/></svg>${paws}</div>`;
+};
+document.getElementById('stepsRow').innerHTML = STEPS.map((s,i)=>{
+  const side = i%2===0?'left':'right';
+  const tr = i<STEPS.length-1 ? walkTrail(side==='left'?'right':'left') : '';
+  return stepCard(s,side)+tr;
+}).join('');
+const howIO = new IntersectionObserver((es)=>es.forEach(e=>{ if(!e.isIntersecting) return;
+  const el=e.target;
+  if(el.classList.contains('walk-trail')){
+    const c=el.querySelector('.walk-curve'); if(c) c.style.opacity='.35';
+    el.querySelectorAll('.walk-paw').forEach(p=>{ p.style.opacity='1'; p.style.transform=`translate(-50%,-50%) rotate(${p.dataset.rot}deg) scale(1)`; });
+  } else { el.style.opacity='1'; el.style.transform='none'; }
+  howIO.unobserve(el);
+}),{threshold:.4});
+document.querySelectorAll('.how-card, .walk-trail').forEach(el=>howIO.observe(el));
+
+const TILTS=['-rotate-2','rotate-1','-rotate-1','rotate-2','-rotate-2','rotate-1'];
+document.getElementById('pupGrid').innerHTML = PUPS.map((p,i)=>`<div class="reveal" data-delay="${(i%3)*100}">
+  <figure class="group sticker-frame ${TILTS[i]} p-2 transition-transform duration-300 hover:rotate-0 hover:shadow-lift sm:p-3">
+    <div class="overflow-hidden rounded-[18px]"><img src="${p.img}" alt="${p.name}" width="400" height="400" class="h-auto w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" /></div>
+    <figcaption class="flex items-center justify-between gap-2 px-2 pb-1 pt-3">
+      <span class="font-display text-lg font-extrabold text-deepsea sm:text-xl">${p.name}</span>
+      <span class="relative inline-flex items-center rounded-full bg-ice px-3 py-1 font-display text-xs font-bold text-pool sm:text-sm">${boneSvg('mr-1.5 h-3 w-5 opacity-70')}${p.age}</span>
+    </figcaption>
+  </figure></div>`).join('');
+
+const chip = (label, delay, tilt) => `<div class="reveal" data-delay="${delay}"><span class="float-slow relative inline-flex items-center rounded-full border-[3px] border-deepsea bg-cream px-5 py-2.5 font-display text-sm font-extrabold text-deepsea shadow-sticker sm:text-base" style="--tilt:${tilt}">
+  <span aria-hidden="true" class="absolute -left-2.5 top-0 h-4 w-4 rounded-full border-[3px] border-deepsea bg-cream"></span>
+  <span aria-hidden="true" class="absolute -left-2.5 bottom-0 h-4 w-4 rounded-full border-[3px] border-deepsea bg-cream"></span>
+  <span aria-hidden="true" class="absolute -right-2.5 top-0 h-4 w-4 rounded-full border-[3px] border-deepsea bg-cream"></span>
+  <span aria-hidden="true" class="absolute -right-2.5 bottom-0 h-4 w-4 rounded-full border-[3px] border-deepsea bg-cream"></span>${label}</span></div>`;
+document.getElementById('chipsLeft').innerHTML = chip(CHIPS[0],120,'-3deg')+chip(CHIPS[1],240,'2deg')+chip(CHIPS[2],360,'-2deg');
+document.getElementById('chipsRight').innerHTML = chip(CHIPS[3],180,'2deg')+chip(CHIPS[4],300,'-3deg')+chip(CHIPS[5],420,'3deg');
+document.getElementById('chipsMobile').innerHTML = CHIPS.map((c,i)=>chip(c,i*90,'0deg')).join('');
+
+const QT=['lg:-rotate-1','lg:rotate-1 lg:translate-y-4','lg:-rotate-1'];
+document.getElementById('quoteGrid').innerHTML = QUOTES.map((t,i)=>`<div class="reveal ${QT[i]}" data-delay="${i*130}">
+  <figure class="relative h-full">
+    <blockquote class="sticker-frame relative h-full px-6 pb-7 pt-8">
+      ${pawSvg('absolute -top-4 left-6 h-9 w-9 rotate-[-14deg] text-pool drop-shadow')}
+      <p class="font-semibold leading-relaxed text-deepsea/80">\u201C${esc(t.q)}\u201D</p>
+      <span aria-hidden="true" class="absolute -bottom-[13px] left-10 h-6 w-6 rotate-45 border-b-[3px] border-r-[3px] border-deepsea bg-white"></span>
+    </blockquote>
+    <figcaption class="mt-6 flex items-center gap-3 pl-2">
+      <span class="grid h-12 w-12 place-items-center rounded-full border-[3px] border-deepsea bg-pool font-display text-sm font-extrabold text-white shadow-sticker">${t.i}</span>
+      <span><span class="block font-display text-lg font-extrabold text-deepsea">${t.n}</span><span class="block text-sm font-bold text-deepsea/55">${t.r}</span></span>
+    </figcaption>
+  </figure></div>`).join('');
+
+document.getElementById('perkList').innerHTML = ['Free training & insurance provided.','Flexible hours.','10th pass and above welcome.'].map(l=>`<li class="flex items-center gap-3 font-bold text-deepsea/75">${boneSvg('h-4 w-7 shrink-0')}${esc(l)}</li>`).join('');
+document.getElementById('experience').innerHTML += EXPERIENCE.map(o=>`<option value="${o}">${o}</option>`).join('');
+document.getElementById('id_proof').innerHTML += IDS.map(o=>`<option value="${o}">${o}</option>`).join('');
+document.getElementById('footerPaws').innerHTML = [-16,10,-12,14].map(t=>pawSvg('h-4 w-4 text-pool/60','transform:rotate('+t+'deg)')).join('');
+
+/* ============ interactions ============ */
+// reveal on scroll
+const io = new IntersectionObserver((es)=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target);} }),{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>{ el.style.transitionDelay=(el.dataset.delay||0)+'ms'; io.observe(el); });
+
+// how-it-works timeline reveal is wired up in its render block
+
+// side paw trail
+const trailInner = document.getElementById('pawTrailInner');
+const TRAIL_N = 14;
+trailInner.innerHTML = Array.from({length:TRAIL_N}).map((_,i)=>{
+  const isLeft=i%2===0;
+  return `<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" class="trail-paw" style="position:absolute;top:${(i/(TRAIL_N-1))*100}%;left:${isLeft?'3px':'23px'};width:20px;height:20px;color:rgba(74,135,200,.55);transform:translateY(-50%) rotate(195deg) scale(.35);opacity:0;transition:opacity .4s ease,transform .45s cubic-bezier(.34,1.56,.64,1);transition-delay:${(i%3)*45}ms">${PAW}</svg>`;
+}).join('');
+const trailPaws = [...trailInner.querySelectorAll('.trail-paw')];
+let trailRaf=0, lastTY=0, tdir='down';
+const onScroll=()=>{ cancelAnimationFrame(trailRaf); trailRaf=requestAnimationFrame(()=>{
+  const y=scrollY;
+  if(Math.abs(y-lastTY)>4){ tdir=y>lastTY?'down':'up'; lastTY=y; }
+  const max=document.documentElement.scrollHeight-innerHeight;
+  const lit=Math.round((max>0?y/max:0)*TRAIL_N);
+  trailPaws.forEach((p,i)=>{
+    const isLeft=i%2===0, base=tdir==='down'?180:0, skew=isLeft?-15:15;
+    const on=tdir==='down'? i<lit : i>=TRAIL_N-lit;
+    p.style.opacity=on?'1':'0';
+    p.style.transform=`translateY(-50%) rotate(${base+skew}deg) scale(${on?1:0.35})`;
+  });
+});};
+addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+// mobile menu
+const menuBtn=document.getElementById('menuBtn'), sheet=document.getElementById('mobileSheet');
+menuBtn.addEventListener('click',()=>{
+  const open=sheet.classList.toggle('hidden')===false;
+  menuBtn.setAttribute('aria-expanded',open);
+  document.getElementById('menuIco').innerHTML = open ? '<path d="m6 6 12 12M18 6 6 18"/>' : '<path d="M4 7h16M4 12h16M4 17h16"/>';
+});
+sheet.addEventListener('click',(e)=>{ if(e.target.closest('[data-close]')){ sheet.classList.add('hidden'); menuBtn.setAttribute('aria-expanded','false'); document.getElementById('menuIco').innerHTML='<path d="M4 7h16M4 12h16M4 17h16"/>'; }});
+
+// dog house
+const house=document.getElementById('house'), houseBtn=document.getElementById('houseBtn');
+const setHouse=(open)=>{ house.classList.toggle('open',open); houseBtn.setAttribute('aria-expanded',open); houseBtn.setAttribute('aria-label',open?'Close the dog house':'Open the dog house'); };
+house.addEventListener('mouseenter',()=>setHouse(true));
+house.addEventListener('mouseleave',()=>setHouse(false));
+houseBtn.addEventListener('click',()=>setHouse(!house.classList.contains('open')));
+house.addEventListener('focusin',()=>setHouse(true));
+house.addEventListener('focusout',(e)=>{ if(!house.contains(e.relatedTarget)) setHouse(false); });
+
+// availability chips + consent
+const slots=new Set();
+const slotWrap=document.getElementById('slotChips');
+slotWrap.innerHTML = SLOTS.map(s=>`<button type="button" data-slot="${s}" aria-pressed="false" class="inline-flex items-center gap-2 rounded-full border-2 border-deepsea/20 bg-white px-4 py-2 font-display text-sm font-bold text-deepsea/70 transition-all hover:border-pool hover:text-pool">${pawSvg('h-3.5 w-3.5 text-pool/50')}${s}</button>`).join('');
+slotWrap.addEventListener('click',(e)=>{
+  const b=e.target.closest('[data-slot]'); if(!b) return;
+  const s=b.dataset.slot, on=!slots.has(s);
+  if(on) slots.add(s); else slots.delete(s);
+  b.setAttribute('aria-pressed',on);
+  b.className = on
+    ? 'inline-flex items-center gap-2 rounded-full border-2 border-deepsea bg-pool px-4 py-2 font-display text-sm font-bold text-white shadow-sticker transition-all'
+    : 'inline-flex items-center gap-2 rounded-full border-2 border-deepsea/20 bg-white px-4 py-2 font-display text-sm font-bold text-deepsea/70 transition-all hover:border-pool hover:text-pool';
+  b.querySelector('svg').setAttribute('class', on ? 'h-3.5 w-3.5 text-ice' : 'h-3.5 w-3.5 text-pool/50');
+});
+const consent=document.getElementById('consent'), consentBox=document.getElementById('consentBox');
+consent.addEventListener('change',()=>{
+  consentBox.style.background = consent.checked ? '#4A87C8' : '#fff';
+  consentBox.style.borderColor = consent.checked ? '#1D4E7E' : 'rgba(29,78,126,.25)';
+  consentBox.innerHTML = consent.checked ? '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="m4.5 12.5 5 5 10-11"/></svg>' : '';
+});
+
+// form submit → FastAPI (with graceful preview-mode fallback)
+const API = '';
+const form=document.getElementById('walkerForm'), errBox=document.getElementById('formError');
+const successPanel=(previewNote)=>`<div class="py-14 text-center" role="status">
+  <span class="mx-auto grid h-20 w-20 place-items-center rounded-full border-[3px] border-deepsea bg-ice"><svg viewBox="0 0 24 24" fill="none" stroke="#4A87C8" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" class="h-10 w-10"><path d="m4.5 12.5 5 5 10-11"/></svg></span>
+  <h3 class="mt-6 font-display text-3xl font-extrabold text-deepsea">Application received!</h3>
+  <p class="mx-auto mt-3 max-w-sm font-semibold text-deepsea/65">Thanks for applying to walk with PawSure. Our team will reach out to you soon.</p>
+  ${previewNote?'<p class="mx-auto mt-5 max-w-sm rounded-2xl border-2 border-biscuit bg-cream px-4 py-3 text-sm font-bold text-deepsea">Preview mode: the FastAPI backend isn\u2019t running, so this submission wasn\u2019t saved. Run <code>uvicorn main:app --port 8000</code> in <code>backend/</code> to store applications.</p>':''}
+  ${pawSvg('mx-auto mt-6 h-8 w-8 rotate-12 text-pool')}
+</div>`;
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  errBox.classList.add('hidden');
+  if(!form.reportValidity()) return;
+  if(slots.size===0){ errBox.textContent='Please pick at least one availability slot.'; errBox.classList.remove('hidden'); return; }
+  if(!consent.checked){ errBox.textContent='Please confirm the declaration to submit.'; errBox.classList.remove('hidden'); return; }
+  const fd=new FormData(form);
+  const payload={
+    first_name:(fd.get('first_name')||'').trim(),
+    last_name:(fd.get('last_name')||'').trim(),
+    phone:'+91 '+(fd.get('phone')||'').trim(),
+    email:(fd.get('email')||'').trim()||undefined,
+    age:Number(fd.get('age')),
+    area:(fd.get('area')||'').trim(),
+    experience:fd.get('experience'),
+    availability:Array.from(slots),
+    motivation:(fd.get('motivation')||'').trim()||undefined,
+    id_proof:fd.get('id_proof'),
+    consent:true,
+  };
+  const label=document.getElementById('submitLabel'); label.textContent='Sending\u2026';
+  try{
+    const res=await fetch(API+'/api/applications',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(!res.ok){
+      let msg='Something went wrong.';
+      try{ const d=await res.json(); if(typeof d.detail==='string') msg=d.detail; else if(Array.isArray(d.detail)&&d.detail[0]?.msg) msg=d.detail[0].msg; }catch(_){/* */}
+      throw Object.assign(new Error(msg),{server:true});
+    }
+    document.getElementById('formWrap').innerHTML=successPanel(false);
+  }catch(err){
+    if(err.server){ label.textContent='Submit application'; errBox.textContent=err.message; errBox.classList.remove('hidden'); }
+    else { document.getElementById('formWrap').innerHTML=successPanel(true); }
+  }
+});
+
+/* ============ bone cursor + companion pup ============ */
+(function(){
+  const fine=matchMedia('(pointer: fine)').matches, wide=matchMedia('(min-width: 768px)').matches, motion=matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  if(!(fine&&wide&&motion)) return;
+  document.documentElement.classList.add('bone-cursor');
+  const boneEl=document.getElementById('boneLayer'), dogEl=document.getElementById('dogLayer');
+  const anchor=document.getElementById('dogAnchor'), runEl=document.getElementById('dogRun'), sitEl=document.getElementById('dogSit');
+  boneEl.style.display='block'; dogEl.style.display='block';
+  const mouse={x:innerWidth/2,y:innerHeight/2}, dog={x:mouse.x-120,y:mouse.y+60};
+  let last=performance.now(), facing=1, sitting=false;
+  addEventListener('mousemove',(e)=>{ mouse.x=e.clientX; mouse.y=e.clientY; last=performance.now(); },{passive:true});
+  (function tick(){
+    const idle=performance.now()-last>500;
+    const dx=mouse.x-dog.x, dy=mouse.y-dog.y, dist=Math.hypot(dx,dy);
+    const ease=idle?0.14:0.085;
+    dog.x+=dx*ease; dog.y+=dy*ease;
+    if(Math.abs(dx)>8) facing=dx>0?1:-1;
+    const isSitting=idle&&dist<26;
+    if(isSitting!==sitting){ sitting=isSitting; runEl.dataset.show=String(!sitting); sitEl.dataset.show=String(sitting); }
+    dogEl.style.transform=`translate3d(${dog.x}px,${dog.y}px,0)`;
+    dogEl.classList.toggle('dog-running',!idle&&dist>16);
+    anchor.style.transform=`translate(-50%,-62%) scale(1.4) scaleX(${facing})`;
+    boneEl.style.transform=`translate3d(${mouse.x}px,${mouse.y}px,0) translate(-50%,-50%) scale(1.4)`;
+    boneEl.style.opacity=isSitting?'0':'1';
+    requestAnimationFrame(tick);
+  })();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Titan+One&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-logo: 'Titan One', system-ui, sans-serif;
+  --font-display: 'Baloo 2', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white font-body text-deepsea antialiased;
+}
+
+section[id] {
+  scroll-margin-top: 96px;
+}
+
+::selection {
+  background: #4a87c8;
+  color: #fff;
+}
+
+/* ---------------------------------- */
+/* Bone cursor + companion pup        */
+/* ---------------------------------- */
+html.bone-cursor,
+html.bone-cursor * {
+  cursor: none !important;
+}
+
+.cursor-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+.bone-layer {
+  z-index: 9999;
+  transition: opacity 0.25s ease;
+}
+.bone-layer svg {
+  width: 30px;
+  height: 22px;
+  filter: drop-shadow(0 2px 2px rgba(29, 78, 126, 0.3));
+  animation: bone-bob 1.6s ease-in-out infinite;
+}
+.dog-layer {
+  z-index: 9998;
+}
+.dog-sprite {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.dog-sprite svg {
+  width: 56px;
+  height: auto;
+  overflow: visible;
+}
+.dog-sprite[data-show='false'] {
+  opacity: 0;
+  transform: scale(0.7);
+}
+.dog-sprite[data-show='true'] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* sub-part animations (transform-box lets origins work inside SVGs) */
+.dog-leg,
+.dog-ear,
+.dog-tail {
+  transform-box: fill-box;
+}
+.dog-leg {
+  transform-origin: top center;
+}
+.dog-ear {
+  transform-origin: 80% 15%;
+}
+.dog-tail {
+  transform-origin: 90% 80%;
+  animation: tail-sway 1.4s ease-in-out infinite;
+}
+.dog-running .dog-leg-a {
+  animation: trot 0.26s ease-in-out infinite;
+}
+.dog-running .dog-leg-b {
+  animation: trot 0.26s ease-in-out infinite reverse;
+}
+.dog-running .dog-ear {
+  animation: ear-flap 0.3s ease-in-out infinite;
+}
+.dog-running .dog-tail {
+  animation: tail-wag 0.3s ease-in-out infinite;
+}
+.dog-running .dog-body {
+  animation: run-bob 0.26s ease-in-out infinite;
+}
+
+@keyframes trot {
+  0%, 100% { transform: rotate(26deg); }
+  50% { transform: rotate(-26deg); }
+}
+@keyframes ear-flap {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-16deg); }
+}
+@keyframes tail-wag {
+  0%, 100% { transform: rotate(14deg); }
+  50% { transform: rotate(-14deg); }
+}
+@keyframes tail-sway {
+  0%, 100% { transform: rotate(6deg); }
+  50% { transform: rotate(-6deg); }
+}
+@keyframes run-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2.5px); }
+}
+@keyframes bone-bob {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+
+/* ---------------------------------- */
+/* Sticker / card language            */
+/* ---------------------------------- */
+.sticker-frame {
+  @apply rounded-[28px] border-[3px] border-deepsea bg-white shadow-stickerLg;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border-[3px] border-deepsea px-6 py-3 font-display text-base font-bold transition-transform duration-200 ease-out;
+}
+.btn:hover {
+  transform: translateY(-2px) rotate(-1deg);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  @apply bg-pool text-white shadow-sticker;
+}
+.btn-primary:hover {
+  @apply bg-deepsea;
+}
+.btn-secondary {
+  @apply bg-white text-deepsea shadow-sticker;
+}
+.btn-secondary:hover {
+  @apply bg-ice;
+}
+.btn:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #4a87c8;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 rounded-full border-2 border-pool/30 bg-ice px-4 py-1.5 font-display text-sm font-bold uppercase tracking-[0.14em] text-pool;
+}
+
+.field-label {
+  @apply mb-1.5 block font-display text-sm font-bold text-deepsea;
+}
+.field-input {
+  @apply w-full rounded-2xl border-2 border-deepsea/15 bg-white px-4 py-3 font-body text-deepsea placeholder:text-deepsea/35 transition-colors;
+}
+.field-input:hover {
+  @apply border-pool/40;
+}
+.field-input:focus {
+  @apply border-pool;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(74, 135, 200, 0.18);
+}
+
+/* ---------------------------------- */
+/* Marquee                            */
+/* ---------------------------------- */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ---------------------------------- */
+/* Dog-tag service cards              */
+/* ---------------------------------- */
+.tag-card {
+  transform-origin: 50% -28px;
+}
+.tag-card:hover {
+  animation: tag-swing 1s ease-in-out;
+}
+@keyframes tag-swing {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(2.4deg); }
+  55% { transform: rotate(-1.8deg); }
+  80% { transform: rotate(0.8deg); }
+  100% { transform: rotate(0deg); }
+}
+.tag-ear {
+  transition: transform 0.25s ease;
+  transform-origin: bottom center;
+}
+.tag-card:hover .tag-ear-l {
+  animation: ear-perk-l 0.5s ease both;
+}
+.tag-card:hover .tag-ear-r {
+  animation: ear-perk-r 0.5s ease both;
+}
+@keyframes ear-perk-l {
+  0% { transform: rotate(-10deg); }
+  55% { transform: rotate(14deg) translateY(-3px); }
+  100% { transform: rotate(6deg) translateY(-2px); }
+}
+@keyframes ear-perk-r {
+  0% { transform: scaleX(-1) rotate(-10deg); }
+  55% { transform: scaleX(-1) rotate(14deg) translateY(-3px); }
+  100% { transform: scaleX(-1) rotate(6deg) translateY(-2px); }
+}
+.tag-tail {
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+  transform: rotate(8deg);
+}
+.tag-card:hover .tag-tail {
+  animation: card-tail-wag 0.32s ease-in-out infinite;
+}
+@keyframes card-tail-wag {
+  0%, 100% { transform: rotate(22deg); }
+  50% { transform: rotate(-12deg); }
+}
+
+/* ---------------------------------- */
+/* Paw reveals                        */
+/* ---------------------------------- */
+.paw-step {
+  opacity: 0;
+  transform: scale(0.3);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.in-view .paw-step,
+.paw-step.is-on {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------------------------------- */
+/* Floating + ambient                 */
+/* ---------------------------------- */
+.float-slow {
+  animation: float-y 5.5s ease-in-out infinite;
+}
+.float-slower {
+  animation: float-y 7.5s ease-in-out infinite;
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-12px) rotate(var(--tilt, 0deg)); }
+}
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.55; }
+}
+.pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+/* ---------------------------------- */
+/* Dog house CTA                      */
+/* ---------------------------------- */
+.house-door {
+  transform-box: view-box;
+  transform-origin: 118px 224px;
+  transform: rotate(0deg);
+  transition: transform 0.6s cubic-bezier(0.34, 1.4, 0.5, 1);
+}
+.house.open .house-door {
+  transform: rotate(-74deg);
+}
+.house-pup {
+  transform: translateY(96px);
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s;
+}
+.house.open .house-pup {
+  transform: translateY(10px);
+}
+.house-cta {
+  opacity: 0;
+  transform: translateY(14px) scale(0.7);
+  transition: opacity 0.3s ease 0.18s, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.18s;
+  pointer-events: none;
+}
+.house.open .house-cta {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.house:hover .house-shake {
+  animation: house-wiggle 0.5s ease;
+}
+@keyframes house-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  30% { transform: rotate(-1.2deg); }
+  65% { transform: rotate(1.2deg); }
+}
+
+/* ---------------------------------- */
+/* Reduced motion: calm everything    */
+/* ---------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal,
+  .paw-step {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .house-cta {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
